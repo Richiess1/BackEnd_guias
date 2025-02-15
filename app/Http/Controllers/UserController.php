@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PartialUpdateRequest;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -66,5 +67,12 @@ class UserController extends Controller
         return response()->json(['message' => 'Usuario eliminado correctamente'], 200);
     }
 
+
+    public function patch (PartialUpdateRequest $request, User $user){
+        $data = $request->validated();
+        $user->update($data);
+
+        return response()->json(UserResource::make($user));
+    }
     
 }
